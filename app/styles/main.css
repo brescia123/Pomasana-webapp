@@ -76,3 +76,7 @@ body {
     border-bottom: 0;
   }
 }
+
+.toast-top-right { 
+    margin-top: 50px; 
+} 

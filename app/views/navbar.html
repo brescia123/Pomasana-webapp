@@ -1,21 +1,18 @@
-<div class="navbar navbar-default container-fluid" role="navigation" bs-navbar>
+<div class="navbar navbar-default navbar-fixed-top container-fluid" role="navigation" bs-navbar>
 	<div class="navbar-header">
 		<a class="navbar-brand" href="#">Pomasana App</a>
 	</div>
 	<ul class="nav navbar-nav navbar-right">
-		<li ng-class="{active : isActive('/')}"><a href="#/">Home</a></li>
-		<li ng-class="{active : isActive('/about')}" ><a href="#/about">About</a></li>
-		<li ng-class="{active : isActive('/contact')}" ><a href="#/contact">Contact</a></li>
-		<li ng-show="!isLogged()" ><a href="#/contact">Login</a></li>
-		<li ng-show="isLogged()" class="dropdown">
+		<li ng-show="!currentUser" ><a href="http://localhost:8080/api/registration?redirect_url=http%3A%2F%2F127.0.0.1%3A9000%2F%23%2Fpersonal-page">Login</a></li>
+		<li ng-class="{active : tabIsActive('/personal-page')}" ng-show="currentUser" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" >
-                        <i class="fa fa-user fa-fw"></i> {{currentUser.name}} <i class="fa fa-caret-down"></i>
+                        <span class="glyphicon glyphicon-user"></span></i> {{currentUser.name}} <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="#/personal-page"><span class="glyphicon glyphicon-user"></span> User Profile</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
