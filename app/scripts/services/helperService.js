@@ -14,6 +14,11 @@ angular.module('pomasanaAppApp')
                     return estArray[0][estArray[0].length - 1];
                 },
 
+                getEstimates: function(pomotask) {
+                    var estArray = JSON.parse("[" + pomotask.estimatedPomodori + "]");
+                    return estArray[0];
+                },
+
                 getProgress: function(pomotask) {
 
                     var estArray = JSON.parse("[" + pomotask.estimatedPomodori + "]");

@@ -4,7 +4,6 @@ angular.module('pomasanaAppApp')
     .controller('CreateModalInstanceCtrl', ['$scope', '$modalInstance', 'PomotasksService', '$window', 'task', 'ErrorService', 'ToastService',
         function($scope, $modalInstance, PomotasksService, $window, task, ErrorService, ToastService) {
 
-            $scope.numberOptions = [1, 2, 3, 4, 5, 6, 7, 8];
             $scope.task = task;
 
 
@@ -201,79 +200,59 @@ angular.module('pomasanaAppApp')
 
         }
     ])
-    .controller('DetailModalInstanceCtrl', ['$scope', '$modalInstance', '$window', 'pomotask', 'PomoTaskPomService',
-        function($scope, $modalInstance, $window, pomotask, PomoTaskPomService) {
+    .controller('DetailModalInstanceCtrl', ['$scope', '$modalInstance', '$window', 'pomotask', 'PomoTaskPomService', 'HelperService', 'ErrorService', 'ToastService',
+        function($scope, $modalInstance, $window, pomotask, PomoTaskPomService, HelperService, ErrorService, ToastService) {
 
-            $scope.pomdori = {};
+            $scope.pomodori = {};
+            $scope.pomotask = pomotask;
 
             PomoTaskPomService.get({
                 id: pomotask.id
             }, {}, function(response) {
                 $scope.pomodori = response.data;
             }, function(error) {
-                $window.alert(error.data.data);
+                ErrorService.handle(error);
+                $modalInstance.close();
             })
 
-            var estArray = JSON.parse("[" + pomotask.estimatedPomodori + "]");
 
-            $scope.estimates = estArray[0];
+            $scope.estimates = HelperService.getEstimates(pomotask);
 
 
-            var estPomodori = function(pomotask) {
-                var estArray = JSON.parse("[" + $scope.pomotask.estimatedPomodori + "]");
-                return estArray[0][estArray[0].length - 1];
+            $scope.usedPom = function(pomotask) {
+                return HelperService.getUsedPom(pomotask);
             };
 
-            var usedPomodori = function(pomotask) {
-                return $scope.pomotask.usedPomodori.length;
+            $scope.estPom = function(pomotask) {
+                return HelperService.getEstPom(pomotask);
             };
 
             $scope.maxProgress = function(pomotask) {
-                var estArray = JSON.parse("[" + pomotask.estimatedPomodori + "]");
-                var estPomodori = estArray[0][estArray[0].length - 1];
-                var max = Math.max(estPomodori, pomotask.usedPomodori.length);
-                return max;
-            }
+                return HelperService.getMaxProgress(pomotask);
+            };
+
+            $scope.lastEst = function(pomotask) {
+                return HelperService.getLastEst(pomotask);
+            };
+
 
             $scope.ok = function() {
                 $modalInstance.close();
             };
 
-            $scope.pomotask = pomotask;
 
-            $scope.estPomodori = estPomodori(pomotask);
-            $scope.usedPomodori = usedPomodori(pomotask);
 
 
         }
     ])
-    .controller('ModifyModalInstanceCtrl', ['$scope', '$modalInstance', '$window', 'pomotask', 'PomotasksService',
-        function($scope, $modalInstance, $window, pomotask, PomotasksService) {
+    .controller('ModifyModalInstanceCtrl', ['$scope', '$modalInstance', '$window', 'pomotask', 'PomotasksService', 'ErrorService', 'ToastService', 'HelperService',
+        function($scope, $modalInstance, $window, pomotask, PomotasksService, ErrorService, ToastService, HelperService) {
 
             $scope.pomotask = pomotask;
 
-            var estArray = JSON.parse("[" + pomotask.estimatedPomodori + "]");
-
-            $scope.estimates = estArray[0];
-
-            $scope.numberOptions = [1, 2, 3, 4, 5, 6, 7, 8];
-
-
-            var estPomodori = function(pomotask) {
-                var estArray = JSON.parse("[" + $scope.pomotask.estimatedPomodori + "]");
-                return estArray[0][estArray[0].length - 1];
-            };
-
-            var usedPomodori = function(pomotask) {
-                return $scope.pomotask.usedPomodori.length;
-            };
-
-
-            $scope.estPomodori = estPomodori(pomotask);
-            $scope.usedPomodori = usedPomodori(pomotask);
 
             $scope.data = {
-                estimatedPomodori: $scope.estPomodori,
+                estimatedPomodori: HelperService.getLastEst(pomotask),
                 name: pomotask.name
             };
 
@@ -287,11 +266,12 @@ angular.module('pomasanaAppApp')
                 }, $scope.data, function(response) {
                     button.progressFinish();
                     $window.setTimeout(function() {
+                        ToastService.pomotaskModified();
                         $modalInstance.close();
                     }, 1000);
                 }, function(error) {
                     button.progressFinish();
-                    $window.alert(error.data.data);
+                    ErrorService.handle(error);
                 });
             };
 

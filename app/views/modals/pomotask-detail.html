@@ -1,0 +1,56 @@
+<div class="modal-header">
+	<h2 class="modal-title">{{pomotask.name}}
+	<span class="label label-success pull-right" ng-show="pomotask.completed">Done</span>
+	<span class="label label-default pull-right" ng-show="!pomotask.completed">Todo</span>
+	</h2>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Current Progress</h3>
+			</div>
+			<div class="panel-body">
+				<div ng-init="x = usedPom(pomotask)"><rating readonly="true" ng-model="x" max="estPom(pomotask)" state-on="'pomo'" state-off="'pomo-shape'"></rating></div>
+			</div>
+		</div>
+		<accordion>
+		<accordion-group ng-show="pomodori	">
+		<accordion-heading>
+		Pomodori <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+		</accordion-heading>
+		<div class="panel panel-danger" ng-repeat="pomodoro in pomodori">
+			<div class="panel-heading">
+				<h3 class="panel-title"><span class="pomo-small"></span> {{pomodoro.completedAt | date : 'short'}}</h3>
+			</div>
+			<div class="panel-body" ng-show="pomodoro.intInterrupt || pomodoro.extInterrupt || pomodoro.notes">
+				<p>Internal interruptions: {{pomodoro.intInterrupt}}</p>
+				<p>External interruptions: {{pomodoro.extInterrupt}}</p>
+				<p>Notes: {{pomodoro.notes}}</p>
+			</div>
+		</div>
+		</accordion-group>
+		</br ng-show="pomodori">
+		<accordion-group ng-show="estimates">
+		<accordion-heading>
+		Past estimates <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+		</accordion-heading>
+		<div class="panel panel-default" ng-repeat="est in estimates">
+			<div><rating readonly="true" ng-model="est" max="8" state-on="'pomo'" state-off="'pomo-small-est'"></rating></div>
+			
+		</div>
+		</accordion-group>
+		</accordion>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<label>Modified at: </label>
+				<p>{{pomotask.createdAt | date : 'short'}}</p>
+				<label ng-show="pomotask.completed">Completed at: </label>
+				<p>{{pomotask.completedAt | date : 'short'}}</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-success" ng-click="ok()">Close</button>
+</div>

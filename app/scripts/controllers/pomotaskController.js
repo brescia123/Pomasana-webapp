@@ -67,12 +67,21 @@ angular.module('pomasanaAppApp')
             })
         }
 
+        $scope.modifyPomotaskModal = function(pomotask) {
+            ModalService.pomoTaskModify(pomotask).then(function(argument) {
+                $scope.loadPomotasks();
+            })
+        }
+
+        $scope.detailPomotaskModal = function(pomotask) {
+            ModalService.pomoTaskDetail(pomotask);
+        }
+
         $scope.addPomodoroModal = function(pomotask) {
             ModalService.pomodoroAdd(pomotask).then(function(argument) {
                 $scope.loadPomotasks();
             })
         }
-
 
         $scope.startPomodoroModal = function(pomotask) {
             ModalService.pomodoroStart(pomotask).then(function(argument) {

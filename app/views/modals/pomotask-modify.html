@@ -1,0 +1,18 @@
+<div class="modal-header">
+<h2 class="modal-title">Modify {{pomotask.name}}
+	<span class="label label-success pull-right" ng-show="pomotask.completed">Done</span>
+	<span class="label label-default pull-right" ng-show="!pomotask.completed">Todo</span>
+	</h2></div>
+<div class="modal-body">
+	<div class="container-fluid">
+		<label>Name</label>
+		<input class="form-control" ng-model="data.name">
+		</br>
+		<label>Estimated pomodori</label>
+		<div><rating ng-model="data.estimatedPomodori" max="8" state-on="'pomo'" state-off="'pomo-small-est'"></rating></div>
+	</div>
+</div>
+<div class="modal-footer">
+	<a class="btn btn-success" progress-button loading-text="Modifying.." finished-text="Modified!" ng-click="ok(this)">Modify</a>
+	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
