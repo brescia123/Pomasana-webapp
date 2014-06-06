@@ -1,8 +1,8 @@
 angular.module('pomasanaAppApp')
-    .factory('UserService', ['AuthService', '$resource',
+    .factory('UserService', ['AuthService', '$resource', 'baseUrl',
 
-        function(auth, $resource) {
-            return $resource('http://localhost:8080/api/users/me', {}, {
+        function(auth, $resource, baseUrl) {
+            return $resource(baseUrl + '/users/me', {}, {
                 getMe: {
                     method: 'GET',
                     isArray: false,

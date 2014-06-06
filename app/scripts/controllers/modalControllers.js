@@ -129,7 +129,7 @@ angular.module('pomasanaAppApp')
 
             $scope.startTimer = function() {
                 $scope.running = true;
-                countdownID = $interval(counter, 5);
+                countdownID = $interval(counter, 1000);
             }
 
             $scope.resetTimer = function() {

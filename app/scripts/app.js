@@ -12,7 +12,7 @@ angular
         'ui.bootstrap',
         'progressButton'
     ])
-    .value('baseUrl', 'http://localhost:8080/api')
+    .value('baseUrl', 'http://pomasana.appspot.com/api')
     .config(function($routeProvider) {
 
         var loginRequired = function($location, $q, AuthService) {
@@ -38,7 +38,7 @@ angular
 
                         if (AuthService.isLogged()) {
                             deferred.reject()
-                            $location.path('/inventory');
+                            $location.path('/pomotasks-todo');
                         } else {
                             deferred.resolve()
                         }

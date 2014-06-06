@@ -3,6 +3,7 @@
 angular.module('pomasanaAppApp')
     .controller('MainCtrl', function($scope, AuthService, $location, $routeParams, $rootScope, UserService, $resource, ErrorService, ToastService, baseUrl) {
 
+        $scope.loginUrl = baseUrl + "/registration?redirect_url=http%3A%2F%2F127.0.0.1%3A9000%2F%23%2Fpersonal-page";
 
         if ($routeParams.access_token) {
 

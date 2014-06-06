@@ -24,9 +24,9 @@
 				<h3 class="panel-title"><span class="pomo-small"></span> {{pomodoro.completedAt | date : 'short'}}</h3>
 			</div>
 			<div class="panel-body" ng-show="pomodoro.intInterrupt || pomodoro.extInterrupt || pomodoro.notes">
-				<p>Internal interruptions: {{pomodoro.intInterrupt}}</p>
-				<p>External interruptions: {{pomodoro.extInterrupt}}</p>
-				<p>Notes: {{pomodoro.notes}}</p>
+				<p ng-show="pomodoro.intInterrupt">Internal interruptions: {{pomodoro.intInterrupt}}</p>
+				<p ng-show="pomodoro.extInterrupt">External interruptions: {{pomodoro.extInterrupt}}</p>
+				<p ng-show="pomodoro.notes">Notes: {{pomodoro.notes}}</p>
 			</div>
 		</div>
 		</accordion-group>

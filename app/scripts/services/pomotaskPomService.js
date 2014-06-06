@@ -1,10 +1,10 @@
  'use strict';
 
  angular.module('pomasanaAppApp')
-     .factory('PomoTaskPomService', ['AuthService', '$resource',
+     .factory('PomoTaskPomService', ['AuthService', '$resource', 'baseUrl',
 
-         function(auth, $resource, $window) {
-             var resource = $resource('http://localhost:8080/api/pomotasks/:id/pomodori', {
+         function(auth, $resource, baseUrl, $window) {
+             var resource = $resource(baseUrl + '/pomotasks/:id/pomodori', {
                  pomotaskId: '@id'
              }, {
                  get: {
