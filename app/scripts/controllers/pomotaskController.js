@@ -61,6 +61,22 @@ angular.module('pomasanaAppApp')
             });
         };
 
+        $scope.uncompletePomotask = function(pomotask) {
+
+            var data = {
+                completed: false
+            };
+
+            PomotasksService.updatePomoTask({
+                id: pomotask.id
+            }, data, function(response) {
+                $scope.loadPomotasks();
+                ToastService.pomotaskUndone();
+            }, function(error) {
+                ErrorService.handle(error);
+            });
+        }
+
         $scope.deletePomotaskModal = function(pomotask) {
             ModalService.pomoTaskDelete(pomotask).then(function(argument) {
                 $scope.loadPomotasks();
@@ -108,9 +124,7 @@ angular.module('pomasanaAppApp')
             return HelperService.getMaxProgress(pomotask);
         };
 
-        $scope.lastEst = function(pomotask) {
-            return HelperService.getLastEst(pomotask);
-        };
+
 
 
 

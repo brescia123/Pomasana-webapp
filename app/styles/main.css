@@ -123,6 +123,10 @@ content:url("../images/pomo-small-est.png");
 	src: url('http://cssdeck.com/uploads/resources/fonts/digii/DS-DIGII.TTF');
 }
 
+.logo {
+	padding-left: 20px;
+}
+
 #timer{
 	text-align: center;
 	font-family:'digi';

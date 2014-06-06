@@ -60,6 +60,10 @@ body {
   color: #fff;
   background-color: #D9534F;
 }
+.nav > li > a:hover, .nav > li > a:focus {
+  color: #fff;
+  background-color: #D9534F;
+}
 
 
 /*

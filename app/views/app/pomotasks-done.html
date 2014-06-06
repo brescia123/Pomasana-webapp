@@ -4,8 +4,7 @@
 		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
 		<input class="form-control" placeholder="Filter" ng-model="query">
 	</div>
-	<div class="col-xs-4" ng-show="pomotasks.length > 0"></div>
-	<div class="col-xs-4" ng-show="pomotasks.length === 0"></div>
+	<div class="col-xs-4"></div>
 	<div class="col-xs-4"><button class="pull-right btn-refresh btn btn-primary" ng-click="loadPomotasks()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button></div>
 </form>
 </br>
@@ -13,25 +12,27 @@
 	<tr>
 		<th></th>
 		<th>Name</th>
+		<th>Completed at</th>
 		<th>Progress</th>
 		<th></th>
 		<tr ng-repeat="pomotask in pomotasks | filter: query" >
-			<td class="col-md-1">
-				<button class="btn btn-success btn-complete"><span class="glyphicon glyphicon-unchecked"></span>  Complete</button>
+			<td class="col-sm-1">
+			<span class="label label-success">Done</span>
 			</td>
 			<td>{{pomotask.name}}</td>
+			<td>{{pomotask.completedAt | date : 'short'}}</td>
 			<td>
-				<div ng-init="x = usedPom(pomotask)"><rating readonly="true" ng-model="x" max="maxProgress(pomotask)" state-on="'pomo-small'" state-off="'pomo-shape-small'"></rating></div>
+				<div ng-init="x = usedPom(pomotask)"><rating readonly="true" ng-model="x" max="estPom(pomotask)" state-on="'pomo-small'" state-off="'pomo-shape-small'"></rating></div>
 			</td>
 			<td>
 				<div class="btn-group pull-right list-button">
-					<button type="button" class="btn btn-primary">Details</button>
+					<button type="button" class="btn btn-primary" ng-click="detailPomotaskModal(pomotask)">Details</button>
 					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 					<span class="caret"></span>
 					<span class="sr-only">Toggle Dropdown</span>
 					</button>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">Undone</a></li>
+						<li><a ng-click="uncompletePomotask(pomotask)">Undone</a></li>
 					</ul>
 				</div>
 			</td>

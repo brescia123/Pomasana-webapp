@@ -10,8 +10,8 @@ angular.module('pomasanaAppApp')
                 },
                 pomotaskCreated: function() {
                     toastr.success('The pomotask has been created! ', 'OK');
-                }, 
-        pomotaskModified: function() {
+                },
+                pomotaskModified: function() {
                     toastr.success('The pomotask has been modified! ', 'OK');
                 },
                 pomotaskDeleted: function() {

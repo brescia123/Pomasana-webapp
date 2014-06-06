@@ -36,7 +36,7 @@
 		Past estimates <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 		</accordion-heading>
 		<div class="panel panel-default" ng-repeat="est in estimates">
-			<div><rating readonly="true" ng-model="est" max="8" state-on="'pomo'" state-off="'pomo-small-est'"></rating></div>
+			<div><rating readonly="true" ng-model="est" max="est" state-on="'pomo'" ></rating></div>
 			
 		</div>
 		</accordion-group>
