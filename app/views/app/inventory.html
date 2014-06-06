@@ -1,0 +1,35 @@
+<h1 class="header">Activity Inventory</h1>
+<form class="row" role="form">
+	
+	<div class="col-xs-4 form form-inline">
+		<label>Project  </label>
+	<select class="form-control" ng-model="selectedProject" ng-change="loadTasks()" ng-options="project.name for project in projects"></select>
+</div>
+<div class="input-group col-xs-4 pull-right">
+	<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+	<input class="form-control" placeholder="Filter" ng-model="query">
+</div>
+<div class="col-xs-6 col-md-4"><button class=" pull-center btn-refresh btn btn-primary" ng-click="load()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button></div>
+</form>
+</br>
+<table ng-show="tasks.length > 1" class="table table-striped table-hover table-condensed">
+<tr>
+	<th>Type</th>
+	<th>Name</th>
+	<th>Due to</th>
+	<th></th>
+	<tr ng-repeat="task in tasks | filter: query" ng-class="{danger : task.related_pomotask}" >
+		<td class="col-md-1">
+			<span ng-show="task.related_pomotask" class="label label-danger">Pomotask</span>
+			<span ng-show="!task.related_pomotask" class="label label-default">Asana Task</span>
+		</td>
+		<td>{{task.name}}</td>
+		<td>{{task.due_on | date : 'short'}}</td>
+		<td>
+			<button ng-show="!task.related_pomotask" ng-click="createPomotaskModal(task)" type="button" class="btn btn-success btn-sm pull-right list-button">Make Pomotask</button>
+			<button ng-show="task.related_pomotask" ng-click="deletePomotaskModal(task)" type="button" class="btn btn-danger btn-sm pull-right list-button">Delete Pomotask</button>
+		</td>
+	</tr>
+</table>
+
+<div ng-show="tasks.length === 0" class="container"><h1 >No task in {{selectedProject.name}}!</h1></div>

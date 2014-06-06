@@ -3,6 +3,7 @@
 angular.module('pomasanaAppApp')
     .controller('MainCtrl', function($scope, AuthService, $location, $routeParams, $rootScope, UserService, $resource, ErrorService, ToastService, baseUrl) {
 
+
         if ($routeParams.access_token) {
 
             AuthService.login($routeParams.access_token);
@@ -19,6 +20,7 @@ angular.module('pomasanaAppApp')
 
             userRes.getMe(function(response) {
                 $rootScope.currentUser = response.data;
+                AuthService.setUser(response.data);
                 ToastService.welcome();
             });
 

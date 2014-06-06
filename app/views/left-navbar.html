@@ -1,8 +1,8 @@
 <div class="col-sm-3 col-md-2 sidebar">
 	<ul class="nav nav-sidebar">
-		<li class="active"><a href="#">Activity Inventory</a></li>
-		<li><a href="#">Pomotask Todo</a></li>
-		<li><a href="#">Pomotask Done</a></li>
-		<li><a href="#">Statistics</a></li>
+		<li ng-class="{active : tabIsActive('/inventory')}"><a href="#">Activity Inventory</a></li>
+		<li ng-class="{active : tabIsActive('/pomotasks-todo')}"><a href="#/pomotasks-todo">Pomotask Todo</a></li>
+		<li ng-class="{active : tabIsActive('/pomotasks-done')}"><a href="#/pomotasks-done">Pomotask Done</a></li>
+		<li ng-class="{active : tabIsActive('/statistics')}"><a href="#">Statistics</a></li>
 	</ul>
 </div>

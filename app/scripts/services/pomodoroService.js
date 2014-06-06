@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('pomasanaAppApp')
-    .factory('PomotasksService', ['AuthService', '$resource', 'baseUrl',
+    .factory('PomodoroService', ['AuthService', '$resource', 'baseUrl',
 
         function(auth, $resource, baseUrl, $window) {
-            var resource = $resource(baseUrl + '/pomotasks/:id', {
+            var resource = $resource(baseUrl + '/pomodori/:id', {
                 pomotaskId: '@id'
             }, {
                 get: {
@@ -21,7 +21,7 @@ angular.module('pomasanaAppApp')
                         'Authorization': auth.getToken()
                     }
                 },
-                getPomoTasks: {
+                getPomodori: {
                     method: 'GET',
                     isArray: false,
                     headers: {
@@ -29,7 +29,7 @@ angular.module('pomasanaAppApp')
                     }
 
                 },
-                updatePomoTask: {
+                updatePomodoro: {
                     method: 'PUT',
                     isArray: false,
                     headers: {
@@ -37,7 +37,7 @@ angular.module('pomasanaAppApp')
                     }
 
                 },
-                createPomoTask: {
+                createPomodoro: {
                     method: 'POST',
                     isArray: false,
                     headers: {

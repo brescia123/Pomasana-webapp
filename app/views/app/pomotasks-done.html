@@ -1,0 +1,40 @@
+<h1 class="header">Pomotasks Done</h1>
+<form class="row">
+	<div class="input-group col-xs-4 pull-left" ng-show="pomotasks.length > 1">
+		<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+		<input class="form-control" placeholder="Filter" ng-model="query">
+	</div>
+	<div class="col-xs-4" ng-show="pomotasks.length > 0"></div>
+	<div class="col-xs-4" ng-show="pomotasks.length === 0"></div>
+	<div class="col-xs-4"><button class="pull-right btn-refresh btn btn-primary" ng-click="loadPomotasks()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button></div>
+</form>
+</br>
+<table ng-show="pomotasks.length > 0" class="table table-striped table-hover table-condensed">
+	<tr>
+		<th></th>
+		<th>Name</th>
+		<th>Progress</th>
+		<th></th>
+		<tr ng-repeat="pomotask in pomotasks | filter: query" >
+			<td class="col-md-1">
+				<button class="btn btn-success btn-complete"><span class="glyphicon glyphicon-unchecked"></span>  Complete</button>
+			</td>
+			<td>{{pomotask.name}}</td>
+			<td>
+				<div ng-init="x = usedPom(pomotask)"><rating readonly="true" ng-model="x" max="maxProgress(pomotask)" state-on="'pomo-small'" state-off="'pomo-shape-small'"></rating></div>
+			</td>
+			<td>
+				<div class="btn-group pull-right list-button">
+					<button type="button" class="btn btn-primary">Details</button>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Undone</a></li>
+					</ul>
+				</div>
+			</td>
+		</tr>
+	</table>	
+	<div ng-show="pomotasks.length === 0" class="container"><h1 >You have no Pomotask!</h1> <h3>Go to the <a href="#/inventory">Activity Inventory</a> to add one!</div>

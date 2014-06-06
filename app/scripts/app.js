@@ -8,10 +8,13 @@ angular
         'ngSanitize',
         'LocalStorageModule',
         'angular-loading-bar',
-        'mgcrea.ngStrap'
+        'mgcrea.ngStrap',
+        'ui.bootstrap',
+        'progressButton'
     ])
     .value('baseUrl', 'http://localhost:8080/api')
     .config(function($routeProvider) {
+
         var loginRequired = function($location, $q, AuthService) {
             var deferred = $q.defer();
 
@@ -51,9 +54,23 @@ angular
                     loginRequired: loginRequired
                 }
             })
+            .when('/pomotasks-todo', {
+                templateUrl: 'views/app/pomotasks-todo.html',
+                controller: 'PomotaskCtrl',
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
+            .when('/pomotasks-done', {
+                templateUrl: 'views/app/pomotasks-done.html',
+                controller: 'PomotaskCtrl',
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
             .when('/inventory', {
                 templateUrl: 'views/app/inventory.html',
-                controller: 'MainCtrl',
+                controller: 'InventoryCtrl',
                 resolve: {
                     loginRequired: loginRequired
                 }
@@ -62,20 +79,21 @@ angular
                 redirectTo: '/'
             });
     })
-    .config(['cfpLoadingBarProvider',
-        function(cfpLoadingBarProvider) {
-            cfpLoadingBarProvider.includeSpinner = true;
-        }
-    ])
     .config(['localStorageServiceProvider',
         function(localStorageServiceProvider) {
             localStorageServiceProvider.setPrefix('pomasana_');
         }
     ])
-    .run(function($rootScope, UserService, AuthService) {
-        if (AuthService.isLogged()) {
+    .run(function($rootScope, $location, UserService, AuthService, ErrorService) {
+
+        $rootScope.currentUser = AuthService.getUser();
+
+        if (AuthService.isLogged() && !AuthService.getUser()) {
             UserService.getMe(function(response) {
+                AuthService.setUser(response.data);
                 $rootScope.currentUser = response.data;
+            }, function(error) {
+                ErrorService.handle(error);
             })
         }
     });

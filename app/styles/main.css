@@ -1,82 +1,133 @@
 /* Space out content a bit */
 body {
-  padding-bottom: 20px;
+padding-bottom: 20px;
 }
-
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
-  padding-left: 15px;
-  padding-right: 15px;
+padding-left: 15px;
+padding-right: 15px;
 }
-
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
+border-bottom: 1px solid #e5e5e5;
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+margin-top: 0;
+margin-bottom: 0;
+line-height: 40px;
+padding-bottom: 19px;
 }
-
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+padding-top: 19px;
+color: #777;
+border-top: 1px solid #e5e5e5;
 }
-
 /* Customize container */
 @media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+.container {
+max-width: 730px;
+}
 }
 .container-narrow > hr {
-  margin: 30px 0;
+margin: 30px 0;
 }
-
 /* Main marketing message and sign up button */
 .jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+text-align: center;
+border-bottom: 1px solid #e5e5e5;
 }
 .jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
+font-size: 21px;
+padding: 14px 24px;
 }
-
 /* Supporting marketing content */
 .marketing {
-  margin: 40px 0;
+margin: 40px 0;
 }
 .marketing p + h4 {
-  margin-top: 28px;
+margin-top: 28px;
 }
-
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+/* Remove the padding we set earlier */
+.header,
+.marketing,
+.footer {
+padding-left: 0;
+padding-right: 0;
+}
+/* Space out the masthead */
+.header {
+margin-bottom: 30px;
+}
+/* Remove the bottom border on the jumbotron for visual effect */
+.jumbotron {
+border-bottom: 0;
+}
+}
+.toast-top-right {
+margin-top: 50px;
+}
+.list-button {
+position: relative;
+opacity: 0;
+right:-30px;}
+.table-hover>tbody>tr:hover .list-button {
+opacity: 100;
+right: 0px;
+-webkit-transition: all 0.3s ease-in-out;
+-moz-transition: all 0.3s ease-in-out;
+-o-transition: all 0.3s ease-in-out;
+transition: all 0.3s ease-in-out;
+}
+.btn-complete {
+position: relative;
+width:38px;
+}
+.btn-complete .glyphicon {
+padding-right: 6px;
+}
+.btn-complete:hover {
+width: 110px;
+-webkit-transition: all 0.3s ease-in-out;
+-moz-transition: all 0.3s ease-in-out;
+-o-transition: all 0.3s ease-in-out;
+transition: all 0.3s ease-in-out;
+}
+.table tbody>tr>td
+{
+vertical-align: middle;
+}
+.pomo {
+padding: 1px;
+content:url("../images/pomo.png");
+}
+.pomo-shape {    padding: 1px;
+content:url("../images/pomo-shape.png");
+}
+.pomo-small {    padding: 1px;
+content:url("../images/pomo-small.png");
+}
+.pomo-shape-small {    padding: 1px;
+content:url("../images/pomo-shape-small.png");
+}
+.pomo-small-est {    padding: 1px;
+content:url("../images/pomo-small-est.png");
+}
+@font-face {
+	font-family: 'digi';
+	src: url('http://cssdeck.com/uploads/resources/fonts/digii/DS-DIGII.TTF');
 }
 
-.toast-top-right { 
-    margin-top: 50px; 
-} 
+#timer{
+	text-align: center;
+	font-family:'digi';
+	font-size:150px; 
+	margin-bottom:40px; 
+	color: red;
+}
+
