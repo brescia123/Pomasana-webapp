@@ -11,7 +11,7 @@
 				<h3 class="panel-title">Current Progress</h3>
 			</div>
 			<div class="panel-body">
-				<div ng-init="x = usedPom(pomotask)"><rating readonly="true" ng-model="x" max="estPom(pomotask)" state-on="'pomo'" state-off="'pomo-shape'"></rating></div>
+				<div ng-init="x = usedPom(pomotask)"><rating readonly="true" ng-model="x" max="maxProgress(pomotask)" state-on="'pomo'" state-off="'pomo-shape'"></rating></div>
 			</div>
 		</div>
 		<accordion>
@@ -31,11 +31,11 @@
 		</div>
 		</accordion-group>
 		</br ng-show="pomodori">
-		<accordion-group ng-show="estimates">
+		<accordion-group >
 		<accordion-heading>
 		Past estimates <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 		</accordion-heading>
-		<div class="panel panel-default" ng-repeat="est in estimates">
+		<div class="panel panel-default" ng-repeat="est in estimates track by $index">
 			<div><rating readonly="true" ng-model="est" max="est" state-on="'pomo'" ></rating></div>
 			
 		</div>

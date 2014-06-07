@@ -167,11 +167,11 @@ angular.module('pomasanaAppApp')
             }
 
             $scope.decrementIntInterrupt = function() {
-                $scope.data.intInterrupt++;
+                $scope.data.intInterrupt--;
             }
 
             $scope.decrementExtInterrupt = function() {
-                $scope.data.extInterrupt++;
+                $scope.data.extInterrupt--;
             }
 
 
