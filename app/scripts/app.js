@@ -13,7 +13,8 @@ angular
         'progressButton'
     ])
     .value('baseUrl', 'http://pomasana.appspot.com/api')
-    .config(function($routeProvider) {
+    .config(['$routeProvider',
+            function($routeProvider) {
 
         var loginRequired = function($location, $q, AuthService) {
             var deferred = $q.defer();
@@ -78,22 +79,24 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-    })
+    }])
     .config(['localStorageServiceProvider',
         function(localStorageServiceProvider) {
             localStorageServiceProvider.setPrefix('pomasana_');
         }
     ])
-    .run(function($rootScope, $location, UserService, AuthService, ErrorService) {
+    .run(['$rootScope', '$location', 'UserService', 'AuthService', 'ErrorService',
+        function($rootScope, $location, UserService, AuthService, ErrorService) {
 
-        $rootScope.currentUser = AuthService.getUser();
+            $rootScope.currentUser = AuthService.getUser();
 
-        if (AuthService.isLogged() && !AuthService.getUser()) {
-            UserService.getMe(function(response) {
-                AuthService.setUser(response.data);
-                $rootScope.currentUser = response.data;
-            }, function(error) {
-                ErrorService.handle(error);
-            })
+            if (AuthService.isLogged() && !AuthService.getUser()) {
+                UserService.getMe(function(response) {
+                    AuthService.setUser(response.data);
+                    $rootScope.currentUser = response.data;
+                }, function(error) {
+                    ErrorService.handle(error);
+                })
+            }
         }
-    });
+    ]);

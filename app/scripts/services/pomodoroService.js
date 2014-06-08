@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pomasanaAppApp')
-    .factory('PomodoroService', ['AuthService', '$resource', 'baseUrl',
+    .factory('PomodoroService', ['AuthService', '$resource', 'baseUrl', '$window',
 
         function(auth, $resource, baseUrl, $window) {
             var resource = $resource(baseUrl + '/pomodori/:id', {

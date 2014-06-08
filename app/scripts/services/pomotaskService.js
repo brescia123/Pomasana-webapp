@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('pomasanaAppApp')
-    .factory('PomotasksService', ['AuthService', '$resource', 'baseUrl',
+    .factory('PomotasksService', ['AuthService', '$resource', 'baseUrl', '$window',
 
         function(auth, $resource, baseUrl, $window) {
             var resource = $resource(baseUrl + '/pomotasks/:id', {
