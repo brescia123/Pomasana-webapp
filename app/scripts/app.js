@@ -14,22 +14,20 @@ angular
     ])
     .value('baseUrl', 'http://pomasana.appspot.com/api')
     .config(['$routeProvider',
-        function($routeProvider, $location, $q, AuthService) {
+        function($routeProvider) {
 
-            var loginRequired = ['$location', '$q', 'AuthService',
-                function($location, $q, AuthService) {
-                    var deferred = $q.defer();
+            var loginRequired = function($location, $q, AuthService) {
+                var deferred = $q.defer();
 
-                    if (!AuthService.isLogged()) {
-                        deferred.reject()
-                        $location.path('/');
-                    } else {
-                        deferred.resolve()
-                    }
-
-                    return deferred.promise;
+                if (!AuthService.isLogged()) {
+                    deferred.reject()
+                    $location.path('/');
+                } else {
+                    deferred.resolve()
                 }
-            ];
+
+                return deferred.promise;
+            };
 
             $routeProvider
                 .when('/', {
