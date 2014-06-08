@@ -16,36 +16,40 @@ angular
     .config(['$routeProvider',
         function($routeProvider) {
 
-            var loginRequired = function($location, $q, AuthService) {
-                var deferred = $q.defer();
+            var loginRequired = ['$location', '$q', 'AuthService',
+                function($location, $q, AuthService) {
+                    var deferred = $q.defer();
 
-                if (!AuthService.isLogged()) {
-                    deferred.reject()
-                    $location.path('/');
-                } else {
-                    deferred.resolve()
+                    if (!AuthService.isLogged()) {
+                        deferred.reject()
+                        $location.path('/');
+                    } else {
+                        deferred.resolve()
+                    }
+
+                    return deferred.promise;
                 }
-
-                return deferred.promise;
-            };
+            ];
 
             $routeProvider
                 .when('/', {
                     templateUrl: 'views/main.html',
                     controller: 'MainCtrl',
                     resolve: {
-                        loggedHome: function($location, $q, AuthService) {
-                            var deferred = $q.defer();
+                        loggedHome: ['$location', '$q', 'AuthService',
+                            function($location, $q, AuthService) {
+                                var deferred = $q.defer();
 
-                            if (AuthService.isLogged()) {
-                                deferred.reject()
-                                $location.path('/pomotasks-todo');
-                            } else {
-                                deferred.resolve()
+                                if (AuthService.isLogged()) {
+                                    deferred.reject()
+                                    $location.path('/pomotasks-todo');
+                                } else {
+                                    deferred.resolve()
+                                }
+
+                                return deferred.promise;
                             }
-
-                            return deferred.promise;
-                        }
+                        ]
                     }
                 })
                 .when('/personal-page', {
