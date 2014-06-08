@@ -1,177 +1,189 @@
 angular.module('progressButton', [])
-	.directive('progressButton', function() {
-		return {
-			scope: true,
-			link: function(scope, element, attrs) {
-				scope.$parent[attrs.progressButton] = scope
+    .directive('progressButton', function() {
+        return {
+            scope: true,
+            link: ['scope', 'element', 'attrs',
+                function(scope, element, attrs) {
+                    scope.$parent[attrs.progressButton] = scope
 
-				scope.progressStart = function() {
-					var button = element
-					
-					lastProgress = new Date().getTime()
+                    scope.progressStart = function() {
+                        var button = element
 
-					if(element.hasClass('in-progress')) {
-						return
-					}
+                        lastProgress = new Date().getTime()
 
-					button.on('progress', function() {
-						lastProgress = new Date().getTime()
-					})
+                        if (element.hasClass('in-progress')) {
+                            return
+                        }
 
-					var interval = window.setInterval(function() {
-						if(new Date().getTime() > (2000 + lastProgress)) {
-							scope.progressIncrement(0.05)
-						}
-					}, 500)
+                        button.on('progress', function() {
+                            lastProgress = new Date().getTime()
+                        })
 
-					button.on('progress-finish', function() {
-						window.clearInterval(interval)
-					})
+                        var interval = window.setInterval(function() {
+                            if (new Date().getTime() > (2000 + lastProgress)) {
+                                scope.progressIncrement(0.05)
+                            }
+                        }, 500)
 
-					scope.progressIncrement(0.1)
-				}
+                        button.on('progress-finish', function() {
+                            window.clearInterval(interval)
+                        })
 
-				scope.progressFinish = function() {
-					scope.progressSet(1)
-				}
+                        scope.progressIncrement(0.1)
+                    }
 
-				scope.progressIncrement = function(value) {
-					value = value || 0.1
+                    scope.progressFinish = function() {
+                        scope.progressSet(1)
+                    }
 
-					emitEvent(element, 'progress', { value: value })
-				}
+                    scope.progressIncrement = function(value) {
+                        value = value || 0.1
 
-				scope.progressSet = function(value) {
-					var finish = false
+                        emitEvent(element, 'progress', {
+                            value: value
+                        })
+                    }
 
-					if(value >= 1) finish = true
+                    scope.progressSet = function(value) {
+                        var finish = false
 
-					emitEvent(element, 'progress', { value: value, absolute: true, finish: finish })
-				}
+                        if (value >= 1) finish = true
 
-				scope.progressTimed = function(seconds, callback) {
-					var button = element
-					var bar = angular.element(button[0].querySelectorAll('.tz-bar'))
+                        emitEvent(element, 'progress', {
+                            value: value,
+                            absolute: true,
+                            finish: finish
+                        })
+                    }
 
-					if(button.hasClass('in-progress')) {
-						return
-					}
+                    scope.progressTimed = function(seconds, callback) {
+                        var button = element
+                        var bar = angular.element(button[0].querySelectorAll('.tz-bar'))
 
-					bar.css('transition', seconds + 's linear')
-					scope.progressSet(0.99)
+                        if (button.hasClass('in-progress')) {
+                            return
+                        }
 
-					window.setTimeout(function() {
-						bar.css('transition', '')
-						scope.progressFinish()
+                        bar.css('transition', seconds + 's linear')
+                        scope.progressSet(0.99)
 
-						if(typeof callback === 'function') {
-							callback()
-						}
-					}, seconds * 1000)
-				}
+                        window.setTimeout(function() {
+                            bar.css('transition', '')
+                            scope.progressFinish()
 
-				var progressInitialize = function() {
-					var button = element
-					var progress = 0
+                            if (typeof callback === 'function') {
+                                callback()
+                            }
+                        }, seconds * 1000)
+                    }
 
-					button.addClass('progress-button')
+                    var progressInitialize = function() {
+                        var button = element
+                        var progress = 0
 
-					attrs.progressType = attrs.progressType || 'background-horizontal'
-					attrs.loadingText = attrs.loadingText || 'Loading..'
-					attrs.finishedText = attrs.finishedText || 'Done!'
+                        button.addClass('progress-button')
 
-					button.attr('data-progress-type', attrs.progressType)
-					button.attr('data-loading-text', attrs.loadingText)
-					button.attr('data-finished-text', attrs.finishedText)
+                        attrs.progressType = attrs.progressType || 'background-horizontal'
+                        attrs.loadingText = attrs.loadingText || 'Loading..'
+                        attrs.finishedText = attrs.finishedText || 'Done!'
 
-					button.append(angular.element('<span class="tz-bar ' + attrs.progressType + '">'))
-					var bar = angular.element(button[0].querySelectorAll('.tz-bar'))
+                        button.attr('data-progress-type', attrs.progressType)
+                        button.attr('data-loading-text', attrs.loadingText)
+                        button.attr('data-finished-text', attrs.finishedText)
 
-					button.on('progress', function(e) {
-						e = e.originalEvent || e
+                        button.append(angular.element('<span class="tz-bar ' + attrs.progressType + '">'))
+                        var bar = angular.element(button[0].querySelectorAll('.tz-bar'))
 
-						if(!button.hasClass('in-progress')) {
-							bar.css('display', '')
-							progress = 0
-							button.removeClass('finished').addClass('in-progress')
-						}
+                        button.on('progress', function(e) {
+                            e = e.originalEvent || e
 
-						if(e.detail.absolute) {
-							progress = e.detail.value
-						} else {
-							progress += e.detail.value
-						}
+                            if (!button.hasClass('in-progress')) {
+                                bar.css('display', '')
+                                progress = 0
+                                button.removeClass('finished').addClass('in-progress')
+                            }
 
-						if(progress >= 1) {
-							progress = 1
-						}
+                            if (e.detail.absolute) {
+                                progress = e.detail.value
+                            } else {
+                                progress += e.detail.value
+                            }
 
-						if(e.detail.finish) {
-							button.removeClass('in-progress').addClass('finished')
+                            if (progress >= 1) {
+                                progress = 1
+                            }
 
-							setTimeout(function() {
-								fadeOut(bar, function() {
-									emitEvent(button, 'progress-finish')
-									setProgress(0)
-								})
+                            if (e.detail.finish) {
+                                button.removeClass('in-progress').addClass('finished')
 
-							}, 500)
-						}
+                                setTimeout(function() {
+                                    fadeOut(bar, function() {
+                                        emitEvent(button, 'progress-finish')
+                                        setProgress(0)
+                                    })
 
-						setProgress(progress)
-					})
+                                }, 500)
+                            }
 
-					button.on('progress-finish', function() {
-						setTimeout(function() {
-							bar.css('display', 'block')
-						}, 500)
-					})
+                            setProgress(progress)
+                        })
 
-					function setProgress(percentage) {
-						if(bar.hasClass('background-horizontal') || bar.hasClass('background-bar')) {
-							bar.css('width', (percentage * 100) + '%')
-						} else if(bar.hasClass('background-vertical')) {
-							bar.css('height', (percentage * 100) + '%')
-						}
-					}
-				}
+                        button.on('progress-finish', function() {
+                            setTimeout(function() {
+                                bar.css('display', 'block')
+                            }, 500)
+                        })
 
-				var fadeOut = function(el, callback) {
-					el.css('opacity', 1)
+                            function setProgress(percentage) {
+                                if (bar.hasClass('background-horizontal') || bar.hasClass('background-bar')) {
+                                    bar.css('width', (percentage * 100) + '%')
+                                } else if (bar.hasClass('background-vertical')) {
+                                    bar.css('height', (percentage * 100) + '%')
+                                }
+                            }
+                    }
 
-					var last = +new Date()
+                    var fadeOut = function(el, callback) {
+                        el.css('opacity', 1)
 
-					var tick = function() {
-						el.css('opacity', +el.css('opacity') - (new Date() - last) / 400)
-						last = +new Date()
+                        var last = +new Date()
 
-						if(+el.css('opacity') > 0) {
-							(window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
-						} else {
-							el.css('display', 'none')
-							el.css('opacity', 1)
+                        var tick = function() {
+                            el.css('opacity', +el.css('opacity') - (new Date() - last) / 400)
+                            last = +new Date()
 
-							if(typeof callback === 'function') {
-								callback()
-							}
-						}
-					}
+                            if (+el.css('opacity') > 0) {
+                                (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
+                            } else {
+                                el.css('display', 'none')
+                                el.css('opacity', 1)
 
-					tick()
-				}
+                                if (typeof callback === 'function') {
+                                    callback()
+                                }
+                            }
+                        }
 
-				var emitEvent = function(el, eventName, data) {
-					if(window.CustomEvent) {
-						var event = new CustomEvent(eventName, { detail: data })
-					} else {
-						var event = document.createEvent('CustomEvent')
-						event.initCustomEvent(eventName, true, true, { detail: data })
-					}
+                        tick()
+                    }
 
-					el[0].dispatchEvent(event)
-				}
+                    var emitEvent = function(el, eventName, data) {
+                        if (window.CustomEvent) {
+                            var event = new CustomEvent(eventName, {
+                                detail: data
+                            })
+                        } else {
+                            var event = document.createEvent('CustomEvent')
+                            event.initCustomEvent(eventName, true, true, {
+                                detail: data
+                            })
+                        }
 
-				progressInitialize()
-			}
-		}
-	})
+                        el[0].dispatchEvent(event)
+                    }
+
+                    progressInitialize()
+                }
+            ]
+        }
+    })
