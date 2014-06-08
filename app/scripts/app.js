@@ -13,21 +13,23 @@ angular
         'progressButton'
     ])
     .value('baseUrl', 'http://pomasana.appspot.com/api')
-    .config(['$routeProvider', '$location', '$q', 'AuthService',
+    .config(['$routeProvider',
         function($routeProvider, $location, $q, AuthService) {
 
-            var loginRequired = function($location, $q, AuthService) {
-                var deferred = $q.defer();
+            var loginRequired = ['$location', '$q', 'AuthService',
+                function($location, $q, AuthService) {
+                    var deferred = $q.defer();
 
-                if (!AuthService.isLogged()) {
-                    deferred.reject()
-                    $location.path('/');
-                } else {
-                    deferred.resolve()
+                    if (!AuthService.isLogged()) {
+                        deferred.reject()
+                        $location.path('/');
+                    } else {
+                        deferred.resolve()
+                    }
+
+                    return deferred.promise;
                 }
-
-                return deferred.promise;
-            }
+            ];
 
             $routeProvider
                 .when('/', {
