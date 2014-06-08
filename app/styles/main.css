@@ -127,6 +127,10 @@ content:url("../images/pomo-small-est.png");
 	padding-left: 20px;
 }
 
+.main-logo{
+	content:url("../images/logo-full.png");
+}
+
 #timer{
 	text-align: center;
 	font-family:'digi';
