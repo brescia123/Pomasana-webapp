@@ -8,7 +8,7 @@ angular.module('progressButton', [])
                 scope.progressStart = function() {
                     var button = element;
 
-                    lastProgress = new Date().getTime();
+                    var lastProgress = new Date().getTime();
 
                     if (element.hasClass('in-progress')) {
                         return;
@@ -18,7 +18,7 @@ angular.module('progressButton', [])
                         lastProgress = new Date().getTime();
                     });
 
-                    var interval = $window.setInterval(function() {
+                    var interval = window.setInterval(function() {
                         if (new Date().getTime() > (2000 + lastProgress)) {
                             scope.progressIncrement(0.05);
                         }
