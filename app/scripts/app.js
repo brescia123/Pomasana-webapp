@@ -13,80 +13,80 @@ angular
         'progressButton'
     ])
     .value('baseUrl', 'http://pomasana.appspot.com/api')
-//.value('redirectBaseUrl', 'http%3A%2F%2Fpomasana.herokuapp.com%2F%23%2F')
-.value('redirectBaseUrl', 'http%3A%2F%2F127.0.0.1%3A9000%2F%23%2F')
-    .config(['$routeProvider',
-        function($routeProvider) {
+    .value('redirectBaseUrl', 'http%3A%2F%2Fpomasana.herokuapp.com%2F%23%2F')
+//.value('redirectBaseUrl', 'http%3A%2F%2F127.0.0.1%3A9000%2F%23%2F')
+.config(['$routeProvider',
+    function($routeProvider) {
 
-            var loginRequired = ['$location', '$q', 'AuthService',
-                function($location, $q, AuthService) {
-                    var deferred = $q.defer();
+        var loginRequired = ['$location', '$q', 'AuthService',
+            function($location, $q, AuthService) {
+                var deferred = $q.defer();
 
-                    if (!AuthService.isLogged()) {
-                        deferred.reject()
-                        $location.path('/');
-                    } else {
-                        deferred.resolve()
-                    }
-
-                    return deferred.promise;
+                if (!AuthService.isLogged()) {
+                    deferred.reject()
+                    $location.path('/');
+                } else {
+                    deferred.resolve()
                 }
-            ];
 
-            $routeProvider
-                .when('/', {
-                    templateUrl: 'views/main.html',
-                    controller: 'MainCtrl',
-                    resolve: {
-                        loggedHome: ['$location', '$q', 'AuthService',
-                            function($location, $q, AuthService) {
-                                var deferred = $q.defer();
+                return deferred.promise;
+            }
+        ];
 
-                                if (AuthService.isLogged()) {
-                                    deferred.reject()
-                                    $location.path('/pomotasks-todo');
-                                } else {
-                                    deferred.resolve()
-                                }
+        $routeProvider
+            .when('/', {
+                templateUrl: 'views/main.html',
+                controller: 'MainCtrl',
+                resolve: {
+                    loggedHome: ['$location', '$q', 'AuthService',
+                        function($location, $q, AuthService) {
+                            var deferred = $q.defer();
 
-                                return deferred.promise;
+                            if (AuthService.isLogged()) {
+                                deferred.reject()
+                                $location.path('/pomotasks-todo');
+                            } else {
+                                deferred.resolve()
                             }
-                        ]
-                    }
-                })
-                .when('/personal-page', {
-                    templateUrl: 'views/personal-page.html',
-                    controller: 'MainCtrl',
-                    resolve: {
-                        loginRequired: loginRequired
-                    }
-                })
-                .when('/pomotasks-todo', {
-                    templateUrl: 'views/app/pomotasks-todo.html',
-                    controller: 'PomotaskCtrl',
-                    resolve: {
-                        loginRequired: loginRequired
-                    }
-                })
-                .when('/pomotasks-done', {
-                    templateUrl: 'views/app/pomotasks-done.html',
-                    controller: 'PomotaskCtrl',
-                    resolve: {
-                        loginRequired: loginRequired
-                    }
-                })
-                .when('/inventory', {
-                    templateUrl: 'views/app/inventory.html',
-                    controller: 'InventoryCtrl',
-                    resolve: {
-                        loginRequired: loginRequired
-                    }
-                })
-                .otherwise({
-                    redirectTo: '/'
-                });
-        }
-    ])
+
+                            return deferred.promise;
+                        }
+                    ]
+                }
+            })
+            .when('/personal-page', {
+                templateUrl: 'views/personal-page.html',
+                controller: 'MainCtrl',
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
+            .when('/pomotasks-todo', {
+                templateUrl: 'views/app/pomotasks-todo.html',
+                controller: 'PomotaskCtrl',
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
+            .when('/pomotasks-done', {
+                templateUrl: 'views/app/pomotasks-done.html',
+                controller: 'PomotaskCtrl',
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
+            .when('/inventory', {
+                templateUrl: 'views/app/inventory.html',
+                controller: 'InventoryCtrl',
+                resolve: {
+                    loginRequired: loginRequired
+                }
+            })
+            .otherwise({
+                redirectTo: '/'
+            });
+    }
+])
     .config(['localStorageServiceProvider',
         function(localStorageServiceProvider) {
             localStorageServiceProvider.setPrefix('pomasana_');
