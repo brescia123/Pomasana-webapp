@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('pomasanaAppApp')
-    .controller('MainCtrl', ['$scope', 'AuthService', '$location', '$routeParams', '$rootScope', 'UserService', '$resource', 'ErrorService', 'ToastService', 'baseUrl',
-        function($scope, AuthService, $location, $routeParams, $rootScope, UserService, $resource, ErrorService, ToastService, baseUrl) {
+    .controller('MainCtrl', ['$scope', 'AuthService', '$location', '$routeParams', '$rootScope', 'UserService', '$resource', 'ErrorService', 'ToastService', 'baseUrl', 'redirectBaseUrl',
+        function($scope, AuthService, $location, $routeParams, $rootScope, UserService, $resource, ErrorService, ToastService, baseUrl,redirectBaseUrl) {
 
-            $scope.loginUrl = baseUrl + "/registration?redirect_url=http%3A%2F%2F127.0.0.1%3A9000%2F%23%2Fpersonal-page";
+            $scope.loginUrl = baseUrl + "/registration?redirect_url=" + redirectBaseUrl + "personal-page";
 
             if ($routeParams.access_token) {
 
