@@ -8,11 +8,13 @@ angular.module('pomasanaAppApp')
             //Init
 
             $scope.pomotasks = {};
+            $scope.loading = false;
 
 
             //Functions
 
             $scope.loadPomotasks = function() {
+                $scope.loading = true;
                 if ($location.path() === "/pomotasks-todo") {
                     $scope.loadTodoPomotasks();
                 }
@@ -27,9 +29,11 @@ angular.module('pomasanaAppApp')
                         completed: 'false'
                     },
                     function(response) {
+                        $scope.loading = false;
                         $scope.pomotasks = response.data;
                     },
                     function(error) {
+                        $scope.loading = false;
                         ErrorService.handle(error);
                     });
             };
@@ -39,9 +43,11 @@ angular.module('pomasanaAppApp')
                         completed: 'true'
                     },
                     function(response) {
+                        $scope.loading = false;
                         $scope.pomotasks = response.data;
                     },
                     function(error) {
+                        $scope.loading = false;
                         ErrorService.handle(error);
                     });
             };

@@ -10,7 +10,8 @@ angular
         'angular-loading-bar',
         'mgcrea.ngStrap',
         'ui.bootstrap',
-        'progressButton'
+        'progressButton',
+        'angularSpinner'
     ])
     .value('baseUrl', 'http://pomasana.appspot.com/api')
     .value('redirectBaseUrl', 'http%3A%2F%2Fpomasana.herokuapp.com%2F%23%2F')

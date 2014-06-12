@@ -139,3 +139,22 @@ content:url("../images/pomo-small-est.png");
 	color: red;
 }
 
+.myHr{
+	margin-right:-40px;
+	margin-left:-40px;
+}
+
+.view-content{
+min-height: 600px;
+padding-left: -15px;
+padding-right: -15px;
+}
+
+.label{
+	padding-right: 5px;
+}
+
+.table{
+	margin-right: 0px;
+}
+
