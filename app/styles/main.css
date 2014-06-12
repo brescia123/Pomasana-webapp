@@ -120,7 +120,7 @@ content:url("../images/pomo-small-est.png");
 }
 @font-face {
 	font-family: 'digi';
-	src: url('http://cssdeck.com/uploads/resources/fonts/digii/DS-DIGII.TTF');
+	src: url("../fonts/DS-DIGII.TTF");
 }
 
 .logo {

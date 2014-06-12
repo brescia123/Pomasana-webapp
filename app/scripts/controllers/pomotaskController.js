@@ -30,7 +30,7 @@ angular.module('pomasanaAppApp')
                         $scope.pomotasks = response.data;
                     },
                     function(error) {
-                        $window.alert(error.data);
+                        ErrorService.handle(error);
                     });
             };
 
@@ -42,7 +42,7 @@ angular.module('pomasanaAppApp')
                         $scope.pomotasks = response.data;
                     },
                     function(error) {
-                        $window.alert(error.data);
+                        ErrorService.handle(error);
                     });
             };
 

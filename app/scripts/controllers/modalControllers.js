@@ -93,62 +93,12 @@ angular.module('pomasanaAppApp')
     .controller('StartPomodoroModalInstanceCtrl', ['$scope', '$modalInstance', 'PomodoroService', '$window', 'pomotask', '$timeout', '$interval', 'ErrorService', 'ToastService',
         function($scope, $modalInstance, PomodoroService, $window, pomotask, $timeout, $interval, ErrorService, ToastService) {
 
-            $scope.pomotask = pomotask;
-            $scope.finished = false;
-            $scope.running = false;
-
-            $scope.secsText = '00';
-            $scope.minsText = '25';
-
-            var bigTime = 1499;
-            $scope.progress = 0;
-            var secs;
-            var mins;
-
-            var countdownID;
-
-
-            var counter = function counter() {
-
-                mins = Math.floor(bigTime / 60);
-                secs = bigTime - mins * 60;
-
-                $scope.secsText = (secs < 10 ? '0' : '') + secs;
-                $scope.minsText = (mins < 10 ? '0' : '') + mins;
-
-                if (bigTime === 0) {
-                    $interval.cancel(countdownID);
-                    $scope.finished = true;
-                    $scope.running = false;
-                    ToastService.pomodoroFinished();
-                } else {
-                    $scope.progress++;
-                    bigTime--;
-                }
-            }
-
-            $scope.startTimer = function() {
-                $scope.running = true;
-                countdownID = $interval(counter, 1000);
-            }
-
-            $scope.resetTimer = function() {
-
-                bigTime = 1499;
-                $scope.progress = 0;
-
-                $scope.finished = false;
-                $scope.running = false;
-
-                $scope.minsText = "25";
-                $scope.secsText = "00";
-
-                $interval.cancel(countdownID);
-            }
-
-
-
-
+            $scope.currentTime = {
+                bigTime: 1499,
+                secsText: '00',
+                minsText: '25',
+                progress: 0
+            };
 
 
             $scope.data = {
@@ -157,6 +107,55 @@ angular.module('pomasanaAppApp')
                 intInterrupt: 0,
                 notes: ""
             }
+
+            var timerWorker;
+            $scope.pomotask = pomotask;
+            $scope.finished = false;
+            $scope.running = false;
+
+
+            var initWorker = function() {
+                timerWorker = new Worker('timerWorker.js');
+                timerWorker.addEventListener('message', function(e) {
+                    $scope.currentTime = e.data;
+
+                    if ($scope.currentTime.bigTime === 0) {
+                        $scope.finished = true;
+                        $scope.running = false;
+                        ToastService.pomodoroFinished();
+                    }
+
+                    $scope.$apply();
+                }, false);
+            }
+
+
+            $scope.startTimer = function() {
+                initWorker();
+                $scope.running = true;
+                timerWorker.postMessage({
+                    'cmd': 'start'
+                });
+            }
+
+            $scope.resetTimer = function() {
+
+                timerWorker.postMessage({
+                    'cmd': 'stop'
+                });
+
+                $scope.currentTime = {
+                    bigTime: 1499,
+                    secsText: '00',
+                    minsText: '25',
+                    progress: 0
+                };
+
+                $scope.finished = false;
+                $scope.running = false;
+
+            }
+
 
             $scope.incrementIntInterrupt = function() {
                 $scope.data.intInterrupt++;
