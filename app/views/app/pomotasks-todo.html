@@ -8,11 +8,6 @@
 	</div>
 	<div class="col-xs-6 col-md-4"><button class="pull-right btn-refresh btn btn-default" ng-click="loadPomotasks()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button></div>
 </form>
-<a name="fb_share" type="button" href="http://www.facebook.com/sharer.php?u={$url}&media={$imgPath}&description={$desc}" class="joinFB">Share Your Advertise</a>
-<script type="text/javascript">FB.ui({
-  method: 'share_open_graph',
-  action_type: 'pomodoro.complete'
-}, function(response){});</script>
 <hr class="myHr">
 <div class="container-fluid view-content">
 	<table ng-show="pomotasks.length > 0 && !loading" class="table table-hover">

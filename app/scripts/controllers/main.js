@@ -2,7 +2,7 @@
 
 angular.module('pomasanaAppApp')
     .controller('MainCtrl', ['$scope', 'AuthService', '$location', '$routeParams', '$rootScope', 'UserService', '$resource', 'ErrorService', 'ToastService', 'baseUrl', 'redirectBaseUrl',
-        function($scope, AuthService, $location, $routeParams, $rootScope, UserService, $resource, ErrorService, ToastService, baseUrl,redirectBaseUrl) {
+        function($scope, AuthService, $location, $routeParams, $rootScope, UserService, $resource, ErrorService, ToastService, baseUrl, redirectBaseUrl) {
 
             $scope.loginUrl = baseUrl + "/registration?redirect_url=" + redirectBaseUrl + "personal-page";
 
@@ -28,6 +28,8 @@ angular.module('pomasanaAppApp')
 
                 //clean path
                 $location.url($location.path());
+
+
             }
 
         }

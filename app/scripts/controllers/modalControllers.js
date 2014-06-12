@@ -5,6 +5,8 @@ angular.module('pomasanaAppApp')
         function($scope, $modalInstance, PomotasksService, $window, task, ErrorService, ToastService) {
 
             $scope.task = task;
+            $scope.added = false;
+
 
 
             $scope.data = {
@@ -66,6 +68,20 @@ angular.module('pomasanaAppApp')
                 $scope.data.extInterrupt++;
             }
 
+            $scope.share = function() {
+                $window.FB.ui({
+                    method: 'share_open_graph',
+                    action_type: 'pomasana:complete',
+                    action_properties: JSON.stringify({
+                        pomodoro: "http://pomasana.herokuapp.com/pomodoro.html",
+                    })
+                }, function(response) {
+                    $modalInstance.close();
+                    ToastService.pomodoroShared();
+
+                });
+            }
+
 
             $scope.ok = function(button) {
 
@@ -73,9 +89,9 @@ angular.module('pomasanaAppApp')
 
                 PomodoroService.createPomodoro($scope.data, function(response) {
                     button.progressFinish();
+                    $scope.added = true;
                     $window.setTimeout(function() {
                         ToastService.pomodoroAdded();
-                        $modalInstance.close();
                     }, 1000);
                 }, function(error) {
                     button.progressFinish();
@@ -156,6 +172,20 @@ angular.module('pomasanaAppApp')
 
             }
 
+            $scope.share = function() {
+                $window.FB.ui({
+                    method: 'share_open_graph',
+                    action_type: 'pomasana:complete',
+                    action_properties: JSON.stringify({
+                        pomodoro: "http://pomasana.herokuapp.com/pomodoro.html",
+                    })
+                }, function(response) {
+                    $modalInstance.close();
+                    ToastService.pomodoroShared();
+
+                });
+            }
+
 
             $scope.incrementIntInterrupt = function() {
                 $scope.data.intInterrupt++;
@@ -180,9 +210,9 @@ angular.module('pomasanaAppApp')
 
                 PomodoroService.createPomodoro($scope.data, function(response) {
                     button.progressFinish();
+                    $scope.added = true;
                     $window.setTimeout(function() {
                         ToastService.pomodoroAdded();
-                        $modalInstance.close();
                     }, 1000);
                 }, function(error) {
                     button.progressFinish();

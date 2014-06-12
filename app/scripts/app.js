@@ -14,8 +14,8 @@ angular
         'angularSpinner'
     ])
     .value('baseUrl', 'http://pomasana.appspot.com/api')
-    .value('redirectBaseUrl', 'http%3A%2F%2Fpomasana.herokuapp.com%2F%23%2F')
-//.value('redirectBaseUrl', 'http%3A%2F%2F127.0.0.1%3A9000%2F%23%2F')
+    .value('redirectBaseUrl', 'http%3A%2F%2Flocalhost%3A9000%2F%23%2F')
+//    .value('redirectBaseUrl', 'http%3A%2F%2Fpomasana.herokuapp.com%2F%23%2F')
 .config(['$routeProvider',
     function($routeProvider) {
 
@@ -106,5 +106,7 @@ angular
                     ErrorService.handle(error);
                 })
             }
+
+
         }
     ]);
