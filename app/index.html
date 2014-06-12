@@ -25,6 +25,24 @@
   <!-- endbuild -->
 </head>
 <body ng-app="pomasanaAppApp" ng-controller="AppController">
+<script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '498702546929715',
+          xfbml      : true,
+          version    : 'v2.0'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+
   <!--[if lt IE 7]>
   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -67,7 +85,6 @@
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="bower_components/spin.js/spin.js"></script>
   <script src="bower_components/angular-spinner/angular-spinner.js"></script>
-  <script src="bower_components/angular-spinner/angular-spinner.min.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
