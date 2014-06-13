@@ -32,8 +32,11 @@
 	</div>
 </div>
 <div class="modal-footer">
-	<a class="btn btn-success" progress-button loading-text="Adding.." finished-text="Added!" ng-click="ok(this)" ng-show="finished">Add</a>
+	<button class="btn btn-primary" ng-click="share()" ng-show="added">Share on FB</button>
+
+	<a class="btn btn-success" progress-button loading-text="Adding.." finished-text="Added!" ng-click="ok(this)" ng-show="finished && !added">Add</a>
 	<button class="btn btn-success" ng-click="startTimer()" ng-show="!finished && !running" >Start</button>
 	<button class="btn btn-danger" ng-click="resetTimer()" ng-show="running">Reset</button>
-	<button class="btn btn-warning" ng-click="cancel()" ng-show="!running">Cancel</button>
+	<button class="btn btn-warning" ng-click="cancel()" ng-show="!running && !added">Cancel</button>
+	<button class="btn btn-warning" ng-click="cancel()" ng-show="added">OK</button>
 </div>

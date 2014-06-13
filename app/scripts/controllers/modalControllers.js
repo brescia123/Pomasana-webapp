@@ -104,6 +104,12 @@ angular.module('pomasanaAppApp')
                 $modalInstance.dismiss('cancel');
             };
 
+            $scope.close = function() {
+                $modalInstance.close();
+            };
+
+
+
         }
     ])
     .controller('StartPomodoroModalInstanceCtrl', ['$scope', '$modalInstance', 'PomodoroService', '$window', 'pomotask', '$timeout', '$interval', 'ErrorService', 'ToastService',
@@ -135,7 +141,7 @@ angular.module('pomasanaAppApp')
                 timerWorker.addEventListener('message', function(e) {
                     $scope.currentTime = e.data;
 
-                    if ($scope.currentTime.bigTime === 0) {
+                    if ($scope.currentTime.bigTime === 0 && $scope.running) {
                         $scope.finished = true;
                         $scope.running = false;
                         ToastService.pomodoroFinished();
@@ -223,6 +229,10 @@ angular.module('pomasanaAppApp')
 
             $scope.cancel = function() {
                 $modalInstance.dismiss('cancel');
+            };
+
+            $scope.close = function() {
+                $modalInstance.close();
             };
 
 
