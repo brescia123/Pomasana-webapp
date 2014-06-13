@@ -22,7 +22,7 @@ self.addEventListener('message', function(e) {
 
         if (time.bigTime === 0) {
             self.postMessage(time);
-            self.close;
+            self.close();
         } else {
             time.bigTime--;
             time.progress++;
