@@ -30,6 +30,8 @@ self.addEventListener('message', function(e) {
         }
     };
 
+
+
     switch (data.cmd) {
         case 'start':
             setInterval(counter, 1000);
